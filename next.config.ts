@@ -1,13 +1,15 @@
 import type { NextConfig } from "next";
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig: NextConfig = {
-  output: "export",  // <=== Enables static export
+  output: "export",
   images: {
-    unoptimized: true, // <=== Required for GitHub Pages
+    unoptimized: true,
   },
-  // IMPORTANT: This assumes your repo name is EXACTLY 'francescalabig-portfolio'
-  // If you deploy to a custom domain later, remove this line.
-  basePath: process.env.NODE_ENV === 'production' ? '/francescalabig-portfolio' : '',
+  // Only add the path prefix when building for production (GitHub Pages)
+  basePath: isProd ? "/francescalabig-portfolio" : "",
+  assetPrefix: isProd ? "/francescalabig-portfolio/" : "",
 };
 
 export default nextConfig;
