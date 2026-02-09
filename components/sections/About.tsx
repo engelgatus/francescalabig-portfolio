@@ -2,23 +2,28 @@
 
 import Container from '@/components/ui/Container';
 import Card from '@/components/ui/Card';
-import CloudEdge from '@/components/decorative/CloudEdge'; // Import CloudEdge
 import { STATS } from '@/lib/constants';
 
 export default function About() {
   return (
-    <section id="about" className="relative py-32 bg-paper z-20"> 
+    <section id="about" className="relative py-32 bg-canvas z-20"> 
       {/* 
-        CLOUD VISIBILITY FIX:
-        We wrap the cloud in a div that sits at the very top (top-0) 
-        and pushes itself UP by ~100% of its height (-translate-y-[99%]).
-        
-        This makes the white cloud sit ON TOP of this white section, 
-        creating a jagged "cloud" leading edge as it scrolls up over the blue Hero.
+        ALTERNATIVE CLOUD EDGE (CSS Background Method)
+        We use a pseudo-element style div that sits absolutely on top.
+        The background image is an encoded SVG cloud shape.
       */}
-      <div className="absolute top-0 left-0 w-full -translate-y-[99%] z-20 pointer-events-none">
-        <CloudEdge position="top" fillColor="var(--color-paper)" />
-      </div>
+      <div 
+        className="absolute top-0 left-0 w-full h-16 sm:h-24 -translate-y-[98%] z-30 pointer-events-none"
+        style={{
+          // This is a "Cloud" shape encoded as a data URI. 
+          // Color is WHITE (%23FFFFFF) to match bg-paper.
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23FFFFFF'/%3E%3C/svg%3E")`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center bottom',
+          transform: 'rotate(180deg)' // Flip it so flat side is down (connecting to section)
+        }}
+      />
 
       <Container>
         <div className="max-w-4xl mx-auto">

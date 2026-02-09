@@ -1,16 +1,21 @@
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
 import Skills from '@/components/sections/Skills';
+import Contact from '@/components/sections/Contact';
+import Footer from '@/components/layout/Footer';
 
 export default function Home() {
   return (
-    <main>
+    <main className="relative">
       <Hero />
-      <div className="relative z-10 bg-paper">
+      
+      <div className="relative z-10 bg-paper shadow-2xl">
         <About />
         <Skills />
-        {/* Future sections (Projects, Contact) go here */}
+        <Contact />
       </div>
+
+      <Footer />
     </main>
   );
 }
