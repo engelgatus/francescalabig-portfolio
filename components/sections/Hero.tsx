@@ -68,9 +68,9 @@ export default function Hero() {
           <div ref={contentRef} className="col-span-1 lg:col-span-6 flex flex-col justify-center h-full relative pl-0 lg:pl-12">
             
             <div className="hero-slide-1 absolute top-1/2 left-0 lg:left-12 w-full -translate-y-1/2">
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white leading-[1.1] drop-shadow-sm">
+              <h1 className="text-8xl! md:text-7xl font-primary! mb-6 text-white leading-[1.2] drop-shadow-sm">
                 Hi, I&apos;m <br />
-                <span className="font-display text-7xl md:text-8xl text-ink tracking-widest uppercase">Frances</span>
+                <span className="font-display text-9xl md:text-8xl text-ink tracking-widest uppercase">Frances</span>
               </h1>
               <p className="text-xl md:text-2xl text-white/90 font-medium leading-relaxed max-w-lg">
                 I turn chaos into calm and to-do lists into done.
@@ -83,7 +83,7 @@ export default function Hero() {
 
             <div className="hero-slide-2 absolute top-1/2 left-0 lg:left-12 w-full -translate-y-1/2 opacity-0 pointer-events-none">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
-                Your time is <span className="text-alice font-display italic">magic</span>. <br/>
+                Your time is <span className="text-alice font-display italic">magic</span> <br/>
                 Don&apos;t waste it on the mundane.
               </h2>
               <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-lg">

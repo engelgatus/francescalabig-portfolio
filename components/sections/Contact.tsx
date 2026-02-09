@@ -27,10 +27,10 @@ export default function Contact() {
           <div className="lg:col-span-7 flex flex-col justify-center">
             <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-[0.9]">
               Let&apos;s make <br />
-              <span className="text-ink/80">magic</span> happen.
+              <span className="text-ink/80 font-display tracking-wide">magic</span> happen.
             </h2>
             <p className="mt-8 text-xl text-white/90 max-w-lg leading-relaxed font-medium">
-              Ready to hand over the chaos? Whether you need a full inbox detox or just someone to keep the ship afloat while you sleep—I&apos;m here.
+              Ready to hand over the chaos? Whether you need a full inbox detox or just someone to keep the ship afloat while you sleep. I&apos;m here.
             </p>
             
             <div className="mt-12 inline-flex items-center gap-3 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full border border-white/20 w-fit">
@@ -85,7 +85,7 @@ export default function Contact() {
                 </div>
 
                 <Button 
-                  className="w-full bg-white text-cheshire hover:bg-ink hover:text-white mt-4 font-bold h-14 text-lg shadow-none"
+                  className="w-full bg-white text-cheshire! hover:bg-ink! hover:text-white mt-4 font-bold h-14 text-lg shadow-none"
                 >
                   Book a Discovery Call
                 </Button>
