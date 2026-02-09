@@ -17,18 +17,14 @@ export default function Hero() {
           trigger: sectionRef.current,
           start: "top top",
           end: "+=2000",
-          scrub: 0.5,    // Reduced from 1 to 0.5 for snappier response
+          scrub: 0.5,
           pin: true,
-          // anticipatePin: 1, // REMOVED: This was causing the "magnet" snap
         },
       });
 
-      // ANIMATION SEQUENCE
       tl.to(".hero-slide-1", { opacity: 0, y: -50, duration: 1 })
         .fromTo(".hero-slide-2", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1 }, "<0.5")
-        
         .to({}, { duration: 0.5 }) 
-
         .to(".hero-slide-2", { opacity: 0, y: -50, duration: 1 })
         .fromTo(".hero-slide-3", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1 }, "<0.5");
 
@@ -37,7 +33,7 @@ export default function Hero() {
           trigger: sectionRef.current,
           start: "top top",
           end: "+=2000",
-          scrub: true, // Instant scrub (no lag) for the visual container
+          scrub: true,
         },
         y: 50,
         scale: 1.05,
@@ -51,73 +47,69 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen flex items-center overflow-hidden bg-alice"
+      className="relative h-screen flex items-center overflow-hidden bg-heart"
     >
-      {/* Background Decor */}
-      <div className="absolute top-20 right-10 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-float pointer-events-none" />
-      <div className="absolute bottom-20 left-10 w-80 h-80 bg-cheshire/20 rounded-full blur-3xl animate-pulse-slow pointer-events-none" />
+      <div className="absolute top-20 right-10 w-64 h-64 bg-white/20 rounded-full blur-3xl animate-float pointer-events-none mix-blend-overlay" />
+      <div className="absolute bottom-20 left-10 w-80 h-80 bg-alice/20 rounded-full blur-3xl animate-pulse-slow pointer-events-none mix-blend-overlay" />
 
       <Container className="relative z-10 w-full h-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 h-full gap-8 md:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 h-full gap-8">
           
-          {/* LEFT COLUMN */}
-          <div ref={visualRef} className="hidden lg:flex flex-col justify-center items-center h-full">
+          <div ref={visualRef} className="hidden lg:col-span-6 lg:flex flex-col justify-center items-center h-full">
             <div className="w-100 h-125 bg-white/10 rounded-[3rem] border border-white/20 backdrop-blur-sm shadow-dream flex items-center justify-center relative group">
-               <span className="text-white/50 font-mono text-sm">
-                 [Visual: Alice falling or Pusheen floating]
+               <span className="text-white/60 font-mono text-sm tracking-widest uppercase">
+                 [Visual: Alice / Pusheen]
                </span>
-               <div className="absolute -top-10 -left-10 w-24 h-24 bg-heart/80 rounded-full blur-xl opacity-60 group-hover:scale-110 transition-transform duration-700" />
+               <div className="absolute -top-10 -left-10 w-24 h-24 bg-alice/80 rounded-full blur-xl opacity-60 group-hover:scale-110 transition-transform duration-700" />
                <div className="absolute top-1/2 -right-12 w-20 h-20 bg-cheshire/80 rounded-full blur-xl opacity-60 animate-pulse-slow" />
             </div>
           </div>
 
-          {/* RIGHT COLUMN */}
-          <div ref={contentRef} className="flex flex-col justify-center h-full relative">
+          <div ref={contentRef} className="col-span-1 lg:col-span-6 flex flex-col justify-center h-full relative pl-0 lg:pl-12">
             
-            {/* SLIDE 1 */}
-            <div className="hero-slide-1 absolute top-1/2 left-0 w-full -translate-y-1/2">
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white leading-tight drop-shadow-sm">
-                Hi, I&apos;m <span className="text-heart">Frances</span>.
+            <div className="hero-slide-1 absolute top-1/2 left-0 lg:left-12 w-full -translate-y-1/2">
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white leading-[1.1] drop-shadow-sm">
+                Hi, I&apos;m <br />
+                <span className="font-display text-7xl md:text-8xl text-ink tracking-widest uppercase">Frances</span>
               </h1>
               <p className="text-xl md:text-2xl text-white/90 font-medium leading-relaxed max-w-lg">
-                Your friendly Virtual Assistant who turns your daily chaos into organized calm.
+                I turn chaos into calm and to-do lists into done.
                 <span className="inline-block ml-2 animate-bounce">✨</span>
               </p>
-              <div className="mt-8 flex items-center gap-2 text-white/60 text-sm font-mono uppercase tracking-widest">
-                <div className="w-8 h-px bg-white/60" /> Scroll to explore
+              <div className="mt-8 flex items-center gap-2 text-white/70 text-sm font-mono uppercase tracking-widest">
+                <div className="w-8 h-px bg-white/70" /> Scroll to explore
               </div>
             </div>
 
-            {/* SLIDE 2 */}
-            <div className="hero-slide-2 absolute top-1/2 left-0 w-full -translate-y-1/2 opacity-0 pointer-events-none">
+            <div className="hero-slide-2 absolute top-1/2 left-0 lg:left-12 w-full -translate-y-1/2 opacity-0 pointer-events-none">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
-                More Time for <br/>
-                <span className="text-heart">What Matters.</span>
+                Your time is <span className="text-alice font-display italic">magic</span>. <br/>
+                Don&apos;t waste it on the mundane.
               </h2>
               <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-lg">
-                I handle the inbox, the scheduling, and the admin headaches so you can focus on growing your business.
+                I handle the inbox, the schedule, and the noise—so you can focus on the big picture.
               </p>
             </div>
 
-            {/* SLIDE 3 */}
-            <div className="hero-slide-3 absolute top-1/2 left-0 w-full -translate-y-1/2 opacity-0 pointer-events-none">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
-                Ready to reclaim <br/>your time?
+            <div className="hero-slide-3 absolute top-1/2 left-0 lg:left-12 w-full -translate-y-1/2 opacity-0 pointer-events-none">
+              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white leading-tight">
+                Ready for a <br/>
+                <span className="font-display text-paper tracking-widest">lighter workload?</span>
               </h2>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   variant="secondary" 
                   size="lg" 
-                  className="bg-paper text-alice hover:bg-white shadow-dream font-bold pointer-events-auto"
+                  className="bg-paper text-heart hover:bg-white shadow-dream font-bold pointer-events-auto border-none"
                 >
-                  View My Work
+                  See My Magic
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="border-white text-white hover:bg-white/10 pointer-events-auto"
+                  className="border-2 border-white text-white hover:bg-white/10 pointer-events-auto font-bold"
                 >
-                  Let&apos;s Chat
+                  Say Hello
                 </Button>
               </div>
             </div>

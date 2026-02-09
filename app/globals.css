@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  /* --- PALETTE: DIGITAL WONDERLAND --- */
-  --color-canvas: #FDFCF8;    /* Warm off-white base */
-  --color-ink: #2D2640;       /* Deep charcoal-purple text */
-  --color-alice: #5D93E1;     /* Signature blue (Primary) */
-  --color-cheshire: #9D84B7;  /* Sophisticated lavender (Secondary) */
-  --color-heart: #F48FB1;     /* Playful pink (Accent) */
-  --color-paper: #FFFFFF;     /* Pure white surface */
+  /* PALETTE */
+  --color-canvas: #fdfcf8;
+  --color-ink: #2d2640;
+  --color-alice: #5d93e1;
+  --color-cheshire: #9d84b7;
+  --color-heart: #f48fb1;
+  --color-paper: #ffffff;
 
-  /* --- TYPOGRAPHY --- */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  /* TYPOGRAPHY */
+  --font-display: var(--font-display);
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", monospace;
 }
 
-/* --- CORE RESETS --- */
 :root {
   --background: var(--color-canvas);
   --foreground: var(--color-ink);
@@ -28,12 +28,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- UTILITIES --- */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .shadow-dream {
     box-shadow: 0 10px 40px -10px rgba(45, 38, 64, 0.08);
   }

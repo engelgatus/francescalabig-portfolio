@@ -1,6 +1,16 @@
 import type { Metadata } from "next";
-import SmoothScroller from "@/components/animations/SmoothScroller"; // Import the new component
+import localFont from "next/font/local";
+import SmoothScroller from "@/components/animations/SmoothScroller";
 import "./globals.css";
+
+// --- FONTS ---
+const displayFont = localFont({
+  src: "../public/fonts/display/love-signal.otf",
+  variable: "--font-display",
+  display: "swap",
+});
+
+// Future: Import primaryFont and secondaryFont here
 
 export const metadata: Metadata = {
   title: "Frances Calabig | Virtual Assistant",
@@ -14,9 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      {/* Inject font variable into the HTML tag */}
+      <body className={`${displayFont.variable} antialiased`}>
         <SmoothScroller>
-            {children}
+          {children}
         </SmoothScroller>
       </body>
     </html>
