@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
+@theme {
+  /* --- PALETTE: DIGITAL WONDERLAND --- */
+  --color-canvas: #FDFCF8;    /* Warm off-white base */
+  --color-ink: #2D2640;       /* Deep charcoal-purple text */
+  --color-alice: #5D93E1;     /* Signature blue (Primary) */
+  --color-cheshire: #9D84B7;  /* Sophisticated lavender (Secondary) */
+  --color-heart: #F48FB1;     /* Playful pink (Accent) */
+  --color-paper: #FFFFFF;     /* Pure white surface */
+
+  /* --- TYPOGRAPHY --- */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+/* --- CORE RESETS --- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: var(--color-canvas);
+  --foreground: var(--color-ink);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- UTILITIES --- */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .shadow-dream {
+    box-shadow: 0 10px 40px -10px rgba(45, 38, 64, 0.08);
+  }
+
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
 }

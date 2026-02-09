@@ -1,45 +1,58 @@
-'use client';
+"use client";
 
-import Container from '@/components/ui/Container';
-import Button from '@/components/ui/Button';
-import { SITE_CONFIG } from '@/lib/constants';
+import { useRef, useLayoutEffect } from "react";
+import Container from "@/components/ui/Container";
+import Button from "@/components/ui/Button";
+import { setupHeroPinning } from "@/lib/animations";
+import gsap from "gsap";
 
 export default function Hero() {
+  const heroRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    // Only run on client
+    const ctx = gsap.context(() => {
+      setupHeroPinning(heroRef, contentRef);
+    }, heroRef); // Scope to this component
+
+    return () => ctx.revert(); // Cleanup
+  }, []);
+
   return (
-    <section className="min-h-screen flex items-center justify-center relative bg-linear-to-br from-pink-50 via-amber-50 to-teal-50">
-      <Container>
-        <div className="text-center max-w-3xl mx-auto">
-          <div className="mb-4 inline-block px-4 py-2 bg-pink-100 rounded-full text-pink-700 text-sm font-medium">
-            Available for new projects
-          </div>
-          
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
-            Hi, I&apos;m <span className="text-pink-500">{SITE_CONFIG.nickname}</span>
+    <section
+      ref={heroRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-alice" 
+    >
+      {/* Background Decor (Pusheen-style blobs) */}
+      <div className="absolute top-20 right-10 w-32 h-32 bg-white/20 rounded-full blur-3xl animate-float" />
+      <div className="absolute bottom-20 left-10 w-40 h-40 bg-cheshire/20 rounded-full blur-3xl animate-pulse-slow" />
+
+      <Container className="relative z-10">
+        <div ref={contentRef} className="text-center max-w-3xl mx-auto">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-sm">
+            Hi, I&apos;m <span className="text-heart">Frances</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 font-medium">
-            {SITE_CONFIG.tagline}
+          <p className="text-xl md:text-2xl text-white/90 mb-10 font-medium leading-relaxed">
+            Your friendly Virtual Assistant who turns chaos into calm 
+            <span className="inline-block ml-2 animate-bounce">✨</span>
           </p>
-          
-          <p className="text-base md:text-lg text-gray-500 mb-10 max-w-2xl mx-auto">
-            I help busy professionals and growing businesses stay organized with reliable administrative support, 
-            so you can focus on what matters most.
-          </p>
-          
-          <div className="flex gap-4 justify-center flex-wrap">
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
-              variant="primary" 
-              size="lg"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              variant="secondary" 
+              size="lg" 
+              className="bg-paper text-alice hover:bg-white shadow-dream font-bold"
             >
-              Let&apos;s Work Together
+              View My Work
             </Button>
             <Button 
               variant="outline" 
-              size="lg"
-              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+              size="lg" 
+              className="border-white text-white hover:bg-white/10"
             >
-              Learn More
+              Let&apos;s Chat
             </Button>
           </div>
         </div>
