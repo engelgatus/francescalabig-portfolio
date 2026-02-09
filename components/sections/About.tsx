@@ -13,7 +13,7 @@ export default function About() {
             <h2 className="text-4xl md:text-5xl font-bold mb-6">About Me</h2>
             <div className="space-y-4 text-lg text-gray-600 leading-relaxed">
               <p>
-                For over 6 years, I've been the behind-the-scenes support for overseas companies, 
+                For over 6 years, I&apos;ve been the behind-the-scenes support for overseas companies, 
                 helping them stay organized and efficient across time zones.
               </p>
               <p>
