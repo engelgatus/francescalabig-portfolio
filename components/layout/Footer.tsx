@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="col-span-4 h-full relative hidden md:block pointer-events-none">
             <div className="absolute -bottom-60 -left-20 w-[140%] h-auto scale-125">
                <Image 
-                 src="/images/white-rabbit.png"
+                 src="images/white-rabbit.png"
                  alt="The White Rabbit"
                  width={600}
                  height={800}

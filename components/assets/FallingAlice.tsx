@@ -5,10 +5,10 @@ import Image from 'next/image';
 import { useRef } from 'react';
 
 const ALICE_FRAMES = [
-  '/images/alice/alice-1.png',
-  '/images/alice/alice-2.png',
-  '/images/alice/alice-3.png',
-  '/images/alice/alice-4.png',
+  'images/alice/alice-1.png',
+  'images/alice/alice-2.png',
+  'images/alice/alice-3.png',
+  'images/alice/alice-4.png',
 ];
 
 export default function FallingAlice({ className }: { className?: string }) {
