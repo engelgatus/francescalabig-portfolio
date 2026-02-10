@@ -65,16 +65,13 @@ export default function Hero() {
             
             {/* SLIDE 1 */}
             <div className="hero-slide-1 absolute top-1/2 left-0 lg:left-12 w-full -translate-y-1/2 px-4 lg:px-0">
-              <h1 className="text-6xl sm:text-7xl md:text-7xl font-bold mb-6 text-white leading-[1.8] drop-shadow-sm">
+              <h1 className="text-6xl sm:text-7xl md:text-7xl font-bold mb-6 text-white leading-loose drop-shadow-sm">
                 Hi, I&apos;m <br />
                 <span className="font-display text-7xl sm:text-8xl md:text-9xl text-ink tracking-widest uppercase">Frances</span>
               </h1>
               <p className="text-lg sm:text-xl md:text-2xl text-white/90 font-medium leading-relaxed max-w-lg">
                 I help busy business owners get organized and get moving.
               </p>
-              <div className="mt-8 flex items-center gap-2 text-white/70 text-sm font-mono uppercase tracking-widest">
-                <div className="w-8 h-px bg-white/70" /> Scroll to explore
-              </div>
             </div>
 
             {/* SLIDE 2 */}
