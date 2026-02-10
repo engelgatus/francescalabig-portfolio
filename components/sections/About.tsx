@@ -8,6 +8,7 @@ import { STATS } from '@/lib/constants';
 export default function About() {
   return (
     <section id="about" className="relative py-32 bg-canvas z-15 overflow-visible">
+      {/* Decorative Wave Separator */}
       <div 
         className="absolute top-0 left-0 w-full h-16 sm:h-24 -translate-y-[98%] pointer-events-none"
         style={{
@@ -21,6 +22,7 @@ export default function About() {
 
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+          {/* Left Text Content */}
           <div className="col-span-1 md:col-start-2 md:col-span-6">
             <div className="text-center md:text-left mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-ink">About Me</h2>
@@ -39,6 +41,7 @@ export default function About() {
               </div>
             </div>
 
+            {/* Stats Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {STATS.map((stat, index) => (
                 <Card key={index} className="text-center hover:shadow-dream transition-shadow">
@@ -53,11 +56,18 @@ export default function About() {
             </div>
           </div>
 
-          <div className="col-span-1 md:col-start-8 md:col-span-4 z-25">
-            <div className="aspect-3/4 w-full bg-canvas border-2 border-dashed border-ink/10 rounded-2xl flex items-center justify-center overflow-hidden group">
-              <div className="text-ink/30 font-medium text-lg transition-transform">
-                Picture of Nini
-              </div>
+          {/* Right Image Content */}
+          <div className="col-span-1 md:col-start-8 md:col-span-4">
+            <div className="aspect-3/4 w-full relative rounded-2xl overflow-hidden shadow-dream border-4 border-white/50 rotate-3 transition-transform hover:rotate-0 hover:scale-105 duration-500 group z-25">
+              <Image
+                src="/images/frances.jpg"
+                alt="Frances Calabig"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw"
+                priority
+              />
+              <div className="absolute inset-0 bg-heart/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             </div>
           </div>
         </div>
