@@ -1,58 +1,99 @@
 'use client';
 
+import { useRef, useState } from 'react';
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import Container from '@/components/ui/Container';
-import Card from '@/components/ui/Card';
 import { SKILLS } from '@/lib/constants';
 
 export default function Skills() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const totalSkills = SKILLS.length;
+    const newIndex = Math.min(
+      Math.floor(latest * totalSkills),
+      totalSkills - 1
+    );
+    setActiveIndex(newIndex);
+  });
+
+  const currentSkillGroup = SKILLS[activeIndex] || SKILLS[0];
+
   return (
-    // bg-canvas matches the site's main theme (Off-white)
-    <section id="skills" className="relative py-24 bg-canvas z-10">
+    <section ref={containerRef} id="skills" className="relative h-[300vh] bg-canvas z-10">
       
-      <Container>
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-ink">What I Can Do</h2>
-          <p className="text-lg text-ink/70 max-w-2xl mx-auto leading-relaxed">
-            A versatile toolkit to help your business thrive.
-          </p>
-        </div>
+      <div className="sticky top-0 h-screen overflow-hidden flex items-center">
+        <Container className="w-full h-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center h-full relative">
+            
+            <div className="col-span-1 lg:col-span-6 lg:pl-12 z-20">
+               <div className="mb-12">
+                  <h2 className="text-xl font-primary uppercase tracking-widest text-ink/40 mb-4">
+                    What I Can Do
+                  </h2>
+                  
+                  <AnimatePresence mode="wait">
+                    <motion.h3 
+                      key={currentSkillGroup.category}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-5xl md:text-6xl font-primary font-bold text-ink"
+                    >
+                      {currentSkillGroup.category}
+                    </motion.h3>
+                  </AnimatePresence>
+               </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {SKILLS.map((skillGroup, index) => (
-            <Card 
-              key={index} 
-              hover 
-              className="flex flex-col h-full bg-paper border border-ink/5 hover:border-alice/20 transition-colors"
-            >
-              {/* Card Header */}
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-ink">
-                  {skillGroup.category}
-                </h3>
-                <div className="h-1 w-12 bg-heart/30 rounded-full mt-3" />
-              </div>
+               <div className="min-h-50">
+                 <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeIndex}
+                      initial="hidden"
+                      animate="visible"
+                      exit="hidden"
+                      variants={{
+                        hidden: { opacity: 0 },
+                        visible: { opacity: 1, transition: { staggerChildren: 0.05 } },
+                      }}
+                      className="flex flex-wrap gap-3"
+                    >
+                      {currentSkillGroup.items.map((skill) => (
+                        <motion.span 
+                          key={skill}
+                          variants={{
+                            hidden: { opacity: 0, scale: 0.9 },
+                            visible: { opacity: 1, scale: 1 }
+                          }}
+                          className="
+                            px-4 py-2 rounded-lg
+                            bg-white/80 border border-ink/10 backdrop-blur-sm
+                            text-ink/80 font-medium
+                            shadow-sm
+                          "
+                        >
+                          {skill}
+                        </motion.span>
+                      ))}
+                    </motion.div>
+                 </AnimatePresence>
+               </div>
+            </div>
 
-              {/* Skills as "Pills" instead of List */}
-              <div className="flex flex-wrap gap-2 content-start flex-1">
-                {skillGroup.items.map((skill, skillIndex) => (
-                  <span 
-                    key={skillIndex}
-                    className="
-                      inline-flex items-center px-3 py-1.5 
-                      rounded-lg text-sm font-medium
-                      bg-alice/5 text-ink/80
-                      hover:bg-alice/10 hover:text-alice
-                      transition-colors cursor-default
-                    "
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </Card>
-          ))}
-        </div>
-      </Container>
+            <div className="col-span-1 lg:col-span-6 flex justify-center items-center h-full relative z-10">
+              <div className="absolute w-150 h-150 bg-gradient-radial from-alice/10 to-transparent opacity-50 blur-3xl" />
+            </div>
+
+          </div>
+        </Container>
+      </div>
     </section>
   );
 }
