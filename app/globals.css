@@ -21,7 +21,7 @@
 
 /* --- CORE RESETS --- */
 :root {
-  --background: var(--color-canvas);
+  --background: var(--color-ink);
   --foreground: var(--color-ink);
 }
 
