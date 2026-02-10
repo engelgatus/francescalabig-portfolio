@@ -54,14 +54,10 @@ export default function About() {
           </div>
 
           <div className="col-span-1 md:col-start-8 md:col-span-4 z-25">
-            <div className="aspect-3/4 w-full bg-canvas border-2 border-dashed border-ink/10 rounded-2xl flex items-center justify-center overflow-hidden relative shadow-dream rotate-2 hover:rotate-0 transition-transform duration-500">
-              <Image
-                src="/images/frances.jpg"
-                alt="Frances Calabig"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
+            <div className="aspect-3/4 w-full bg-canvas border-2 border-dashed border-ink/10 rounded-2xl flex items-center justify-center overflow-hidden group">
+              <div className="text-ink/30 font-medium text-lg transition-transform">
+                Picture of Nini
+              </div>
             </div>
           </div>
         </div>

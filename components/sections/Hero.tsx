@@ -47,7 +47,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen flex items-center overflow-hidden bg-heart"
+      className="relative z-5 h-screen flex items-center overflow-hidden bg-heart"
     >
 
       <Container className="relative z-10 w-full h-full">

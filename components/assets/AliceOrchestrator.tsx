@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   animate,
   motion,
@@ -22,36 +23,43 @@ const ALICE_FRAMES = [
 
 type Mode = 'SCROLL' | 'LOOP';
 
-export default function AliceOrchestrator() {
+function AliceContent() {
   const { scrollY } = useScroll();
 
   const [mode, setMode] = useState<Mode>('SCROLL');
   const [aboutTop, setAboutTop] = useState<number | null>(null);
+  const [aboutBottom, setAboutBottom] = useState<number | null>(null);
   const [skillsTop, setSkillsTop] = useState<number | null>(null);
+  const [skillsBottom, setSkillsBottom] = useState<number | null>(null);
+  const [contactTop, setContactTop] = useState<number | null>(null);
   const [vh, setVh] = useState<number>(0);
 
-  // 1. Mouse Tracking (Matches PerpetualAlice: Raw centered value, spring dampens it)
   const mouseX = useMotionValue(0);
   const mouseXSpring = useSpring(mouseX, { stiffness: 30, damping: 20 });
   
   const loopTicker = useMotionValue(0);
-  const bobTicker = useMotionValue(0); // Added for bob animation
+  const bobTicker = useMotionValue(0);
 
   useEffect(() => {
     const measure = () => {
       setVh(window.innerHeight);
-
       const aboutEl = document.getElementById('about');
       const skillsEl = document.getElementById('skills');
+      const contactEl = document.getElementById('contact');
 
-      if (!aboutEl || !skillsEl) return;
+      if (!aboutEl || !skillsEl || !contactEl) return;
 
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      
       const aboutRect = aboutEl.getBoundingClientRect();
       const skillsRect = skillsEl.getBoundingClientRect();
+      const contactRect = contactEl.getBoundingClientRect();
 
       setAboutTop(aboutRect.top + scrollTop);
+      setAboutBottom(aboutRect.bottom + scrollTop);
       setSkillsTop(skillsRect.top + scrollTop);
+      setSkillsBottom(skillsRect.bottom + scrollTop);
+      setContactTop(contactRect.top + scrollTop);
     };
 
     measure();
@@ -68,9 +76,8 @@ export default function AliceOrchestrator() {
     const handleMove = (e: MouseEvent) => {
       if (mode !== 'LOOP') return;
       const centered = e.clientX - window.innerWidth / 2;
-      mouseX.set(centered); // Use raw centered pixel value like PerpetualAlice
+      mouseX.set(centered);
     };
-
     window.addEventListener('mousemove', handleMove);
     return () => window.removeEventListener('mousemove', handleMove);
   }, [mode, mouseX]);
@@ -78,19 +85,17 @@ export default function AliceOrchestrator() {
   useEffect(() => {
     if (mode !== 'LOOP') return;
 
-    // A. Frame Loop (Exact same timing as PerpetualAlice)
     const frameControls = animate(loopTicker, ALICE_FRAMES.length, {
-      duration: ALICE_FRAMES.length * 0.12, // 120ms per frame
+      duration: ALICE_FRAMES.length * 0.12,
       ease: 'linear',
       repeat: Infinity,
     });
 
-    // B. Bobbing (Exact same timing as PerpetualAlice y: [0, 15, 0])
     const bobControls = animate(bobTicker, 1, {
       duration: 3, 
       ease: "easeInOut",
       repeat: Infinity,
-      repeatType: "mirror" // 0 -> 1 -> 0
+      repeatType: "mirror"
     });
 
     return () => {
@@ -100,7 +105,12 @@ export default function AliceOrchestrator() {
   }, [mode, loopTicker, bobTicker]);
 
   const safeAboutTop = aboutTop ?? 0;
-  const safeSkillsTop = skillsTop ?? safeAboutTop + 1;
+  const safeAboutBottom = aboutBottom ?? safeAboutTop + 800;
+  const safeSkillsTop = skillsTop ?? safeAboutBottom;
+  const safeSkillsBottom = skillsBottom ?? safeSkillsTop + 1000;
+  const safeContactTop = contactTop ?? safeSkillsBottom;
+
+  const aboutMiddle = safeAboutTop + ((safeAboutBottom - safeAboutTop) * 0.4);
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     if (skillsTop == null) return;
@@ -119,27 +129,41 @@ export default function AliceOrchestrator() {
     [140, Math.max(180, vh * 0.22)]
   );
 
-  // Map 0-1 ticker to 0-15px bob (Matches PerpetualAlice y: [0, 15, 0])
   const bobOffset = useTransform(bobTicker, [0, 1], [0, 15]);
 
-  // Combined Y Logic: Preserves your scroll logic, adds bob ONLY in LOOP
   const y = useTransform([baseYScroll, bobOffset], ([scrollYVal, bob]: number[]) =>
     mode === 'LOOP' ? (vh ? vh * 0.22 + bob : 220 + bob) : scrollYVal
   );
 
-  // X Logic: Map -1000/1000 screen width to -50/50px movement (Matches PerpetualAlice)
   const xLoop = useTransform(mouseXSpring, [-1000, 1000], [-50, 50]);
-  const x = mode === 'LOOP' ? xLoop : 0;
+  const x = useTransform([mouseXSpring], () => {
+     return mode === 'LOOP' ? xLoop.get() : -40;
+  });
 
-  const scaleScroll = useTransform(scrollY, [safeAboutTop, safeSkillsTop], [1, 1.12]);
-  const scaleRaw = useTransform(scaleScroll, (s) => (mode === 'LOOP' ? 1.18 : s));
+  const scaleScroll = useTransform(
+    scrollY,
+    [safeAboutTop, safeSkillsTop - 300, safeSkillsTop, safeSkillsBottom],
+    [1, 1, 1.35, 0.9]
+  );
+  const scaleRaw = useTransform(scaleScroll, (s) => (mode === 'LOOP' ? s : s));
   const scale = useSpring(scaleRaw, { stiffness: 120, damping: 20 });
 
   const zIndexRaw = useTransform(
     scrollY,
-    [safeAboutTop, safeAboutTop + 300],
-    [10, 50]
+    [
+      safeAboutTop,
+      aboutMiddle,
+      safeContactTop - 200,
+      safeContactTop
+    ],
+    [
+      -20,
+      20,
+      20,
+      -20
+    ]
   );
+  
   const zIndex = useTransform(zIndexRaw, (v) => Math.round(v));
 
   return (
@@ -206,4 +230,11 @@ function SpriteFrame(props: {
       />
     </motion.div>
   );
+}
+
+export default function AliceOrchestrator() {
+  // Simple check: only render portal on client side
+  if (typeof window === 'undefined') return null;
+
+  return createPortal(<AliceContent />, document.body);
 }

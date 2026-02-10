@@ -1,23 +1,29 @@
+'use client';
+
+import dynamic from 'next/dynamic';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
 import Skills from '@/components/sections/Skills';
 import Contact from '@/components/sections/Contact';
 import Footer from '@/components/layout/Footer';
-import AliceOrchestratorWrapper from '@/components/assets/AliceOrchestratorWrapper';
+
+const AliceOrchestrator = dynamic(
+  () => import('@/components/assets/AliceOrchestrator'),
+  { ssr: false }
+);
 
 export default function Home() {
   return (
-    <main className="relative">
-      <AliceOrchestratorWrapper />
-      <Hero />
+    <>
+      <AliceOrchestrator />
       
-      <div className="relative z-10 bg-paper shadow-2xl">
+      <main className="min-h-screen">
+        <Hero />
         <About />
         <Skills />
         <Contact />
-      </div>
-
-      <Footer />
-    </main>
+        <Footer />
+      </main>
+    </>
   );
 }

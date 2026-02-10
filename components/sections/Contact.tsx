@@ -6,7 +6,7 @@ import Button from "@/components/ui/Button";
 export default function Contact() {
   return (
     // No overflow-hidden on the main section -> Cloud can hang down!
-    <section id="contact" className="relative py-32 md:py-60 bg-cheshire mb-75 md:mb-100 z-10">
+    <section id="contact" className="relative py-32 md:py-60 bg-cheshire mb-75 md:mb-100 z-25">
       
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
          <div className="absolute top-0 right-0 w-125 h-125 bg-white/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
