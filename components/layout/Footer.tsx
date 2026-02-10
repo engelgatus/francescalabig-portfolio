@@ -27,7 +27,7 @@ export default function Footer() {
 
           {/* CENTER-LEFT (Cols 5-8): The Quote */}
           <div className="col-span-12 md:col-span-5 flex flex-col justify-center h-full z-20">
-            <h3 className="font-primary font-bold text-3xl md:text-5xl leading-tight text-white/90 tracking-tight">
+            <h3 className="font-primary font-bold text-3xl md:text-6xl leading-tight text-white/90 tracking-tight">
               &ldquo;All good things <br/> 
               <span className="text-cheshire italic font-display tracking-widest">take time</span>.&rdquo;
             </h3>

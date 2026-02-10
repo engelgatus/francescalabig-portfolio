@@ -70,7 +70,7 @@ export default function Hero() {
                 <span className="font-display text-7xl sm:text-8xl md:text-9xl text-ink tracking-widest uppercase">Frances</span>
               </h1>
               <p className="text-lg sm:text-xl md:text-2xl text-white/90 font-medium leading-relaxed max-w-lg">
-                I help busy business owners get organized and get moving.
+                I help business owners get organized and get moving.
               </p>
             </div>
 
