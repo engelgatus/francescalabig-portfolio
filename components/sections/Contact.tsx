@@ -6,23 +6,12 @@ import Button from "@/components/ui/Button";
 export default function Contact() {
   return (
     // No overflow-hidden on the main section -> Cloud can hang down!
-    <section id="contact" className="relative py-32 bg-cheshire mb-75 md:mb-100 z-10">
+    <section id="contact" className="relative py-32 md:py-60 bg-cheshire mb-75 md:mb-100 z-10">
       
-      {/* 
-         FIX FOR DRAGGING BUG:
-         Instead of letting the blob position itself off-screen freely,
-         we wrap it in a container that has `overflow-hidden`.
-         This container matches the section size.
-      */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
          <div className="absolute top-0 right-0 w-125 h-125 bg-white/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
       </div>
-      
-      {/* 
-         BOTTOM CLOUD EDGE
-         This is OUTSIDE the overflow-hidden wrapper above.
-         So it can hang down (translate-y-99%) and cover the footer top.
-      */}
+
       <div 
         className="absolute bottom-0 left-0 w-full h-16 sm:h-24 translate-y-[99%] z-20 pointer-events-none"
         style={{
