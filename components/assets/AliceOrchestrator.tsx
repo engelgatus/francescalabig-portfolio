@@ -155,6 +155,21 @@ function AliceContent() {
   const scaleRaw = useTransform(scaleScroll, (s) => (mode === 'LOOP' ? s : s));
   const scale = useSpring(scaleRaw, { stiffness: 120, damping: 20 });
 
+  // --- ADDED ROTATION LOGIC ---
+  // Mimics FallingAlice: rotates from -5 to 15 degrees during the fall
+  const rotateScroll = useTransform(
+    scrollY,
+    [safeAboutTop, safeSkillsTop],
+    [-5, 15] 
+  );
+  
+  // FIXED: Maintain 15 degrees (the landing angle) when in LOOP mode
+  const rotateRaw = useTransform(rotateScroll, (r) => (mode === 'LOOP' ? 15 : r));
+  
+  // Apply spring for that "buttery smooth" feel
+  const rotate = useSpring(rotateRaw, { stiffness: 60, damping: 20 });
+  // ----------------------------
+
   const zIndexRaw = useTransform(
     scrollY,
     [
@@ -186,7 +201,7 @@ function AliceContent() {
       <div className="relative h-full w-full max-w-7xl mx-auto px-6 md:px-12">
         <motion.div
           className="absolute right-6 md:right-40" 
-          style={{ x, y, scale }}
+          style={{ x, y, scale, rotate }}
         >
           <div className="relative w-75 h-100">
             {ALICE_FRAMES.map((src, index) => (
