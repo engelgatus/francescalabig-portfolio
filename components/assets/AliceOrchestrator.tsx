@@ -27,6 +27,7 @@ function AliceContent() {
   const { scrollY } = useScroll();
 
   const [mode, setMode] = useState<Mode>('SCROLL');
+  const [isMobile, setIsMobile] = useState(true); // Default to true to prevent flash on mobile
   const [aboutTop, setAboutTop] = useState<number | null>(null);
   const [aboutBottom, setAboutBottom] = useState<number | null>(null);
   const [skillsTop, setSkillsTop] = useState<number | null>(null);
@@ -43,6 +44,8 @@ function AliceContent() {
   useEffect(() => {
     const measure = () => {
       setVh(window.innerHeight);
+      setIsMobile(window.innerWidth < 768); // Detect mobile
+
       const aboutEl = document.getElementById('about');
       const skillsEl = document.getElementById('skills');
       const contactEl = document.getElementById('contact');
@@ -123,22 +126,26 @@ function AliceContent() {
     [0, ALICE_FRAMES.length * 3]
   );
 
+  const landingY = vh * 0.22; 
+
   const baseYScroll = useTransform(
     scrollY,
     [safeAboutTop, safeSkillsTop],
-    [140, Math.max(180, vh * 0.22)]
+    [140, landingY] 
   );
 
   const bobOffset = useTransform(bobTicker, [0, 1], [0, 15]);
 
   const y = useTransform([baseYScroll, bobOffset], ([scrollYVal, bob]: number[]) =>
-    mode === 'LOOP' ? (vh ? vh * 0.22 + bob : 220 + bob) : scrollYVal
+    mode === 'LOOP' ? landingY + bob : scrollYVal
   );
 
   const xLoop = useTransform(mouseXSpring, [-1000, 1000], [-50, 50]);
-  const x = useTransform([mouseXSpring], () => {
-     return mode === 'LOOP' ? xLoop.get() : -40;
+  
+  const xRaw = useTransform([mouseXSpring], () => {
+     return mode === 'LOOP' ? xLoop.get() : -20; 
   });
+  const x = useSpring(xRaw, { stiffness: 60, damping: 15 });
 
   const scaleScroll = useTransform(
     scrollY,
@@ -166,6 +173,11 @@ function AliceContent() {
   
   const zIndex = useTransform(zIndexRaw, (v) => Math.round(v));
 
+  // --- MOBILE DISABLE FIX ---
+  // If isMobile is true, return null immediately. 
+  // This completely unmounts Alice on mobile screens.
+  if (isMobile) return null;
+
   return (
     <motion.div 
       className="fixed inset-0 pointer-events-none overflow-hidden"
@@ -173,7 +185,7 @@ function AliceContent() {
     >
       <div className="relative h-full w-full max-w-7xl mx-auto px-6 md:px-12">
         <motion.div
-          className="absolute right-6 md:right-12"
+          className="absolute right-6 md:right-40" 
           style={{ x, y, scale }}
         >
           <div className="relative w-75 h-100">
@@ -233,7 +245,6 @@ function SpriteFrame(props: {
 }
 
 export default function AliceOrchestrator() {
-  // Simple check: only render portal on client side
   if (typeof window === 'undefined') return null;
 
   return createPortal(<AliceContent />, document.body);

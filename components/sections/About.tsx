@@ -7,7 +7,7 @@ import { STATS } from '@/lib/constants';
 
 export default function About() {
   return (
-    <section id="about" className="relative py-32 bg-canvas z-15 overflow-visible">
+    <section id="about" className="relative py-32 bg-canvas overflow-visible">
       {/* Decorative Wave Separator */}
       <div 
         className="absolute top-0 left-0 w-full h-16 sm:h-24 -translate-y-[98%] pointer-events-none"
@@ -57,7 +57,7 @@ export default function About() {
           </div>
 
           {/* Right Image Content */}
-          <div className="col-span-1 md:col-start-8 md:col-span-4">
+          <div className="col-span-1 md:col-start-8 md:col-span-4 z-25">
             <div className="aspect-3/4 w-full relative rounded-2xl overflow-hidden shadow-dream border-4 border-white/50 rotate-3 transition-transform hover:rotate-0 hover:scale-105 duration-500 group z-25">
               <Image
                 src="/images/frances.jpg"

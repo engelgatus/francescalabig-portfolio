@@ -1,13 +1,22 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import Container from '@/components/ui/Container';
 import { SKILLS } from '@/lib/constants';
+import PerpetualAlice from '@/components/assets/PerpetualAlice'; // Import Alice
 
 export default function Skills() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024); // Matches lg breakpoint
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -87,8 +96,19 @@ export default function Skills() {
                </div>
             </div>
 
+            {/* Right Column: Background Glow + Mobile Alice */}
             <div className="col-span-1 lg:col-span-6 flex justify-center items-center h-full relative z-10">
               <div className="absolute w-150 h-150 bg-gradient-radial from-alice/10 to-transparent opacity-50 blur-3xl" />
+              
+              {/* MOBILE ONLY ALICE:
+                  - Only renders if isMobile is true (width < 1024px)
+                  - Placed exactly where the Orchestrator Alice WOULD have been on desktop
+              */}
+              {isMobile && (
+                <div className="relative z-20 mt-8 lg:mt-0 scale-200 top-[-70] right-[-40]">
+                  <PerpetualAlice className="opacity-90" />
+                </div>
+              )}
             </div>
 
           </div>

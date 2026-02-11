@@ -53,14 +53,19 @@ export default function PerpetualAlice({ className }: { className?: string }) {
         y: { duration: 3, repeat: Infinity, ease: "easeInOut" }
       }}
     >
-      <div className="relative w-75 h-100">
+      {/* RESPONSIVE SIZE: 
+          - Mobile: w-45 h-60 (180px x 240px)
+          - Tablet: sm:w-60 sm:h-80 (240px x 320px)
+          - Desktop: lg:w-75 lg:h-100 (300px x 400px)
+      */}
+      <div className="relative w-45 h-60 sm:w-60 sm:h-80 lg:w-75 lg:h-100 mx-auto">
         {ALICE_FRAMES.map((src, index) => (
           <Image
             key={src}
             src={src}
             alt="Alice Perpetual Fall"
             fill
-            sizes="300px"
+            sizes="(max-width: 768px) 200px, 300px"
             className={`object-contain transition-opacity duration-0 ${
               index === currentFrame ? 'opacity-100' : 'opacity-0'
             }`}
